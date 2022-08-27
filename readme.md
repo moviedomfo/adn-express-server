@@ -80,13 +80,13 @@ generate image
  * generate image
  
 ```
-    docker image build -t moviedomfo/express_auth .
+    docker image build -t moviedomfo/express_adn .
 ```
 
  * run container
  
 ```
-docker run -d -p 3008:80 --name express_auth moviedomfo/express_auth  
+docker run -d -p 3008:80 --name express_adn moviedomfo/express_adn  
 ```
 
  * Navigate to this url to check the if correctly docker container is running 

@@ -2,7 +2,7 @@ version: "3.2"
 services:
   app:
     container_name: poronga
-    image: moviedomfo/express_auth
+    image: moviedomfo/express_adn
     ports:
       - "3003:3003"
       - "3001:3001"
@@ -10,7 +10,7 @@ services:
       - PORT=${PORT}
       - SERVER_NAME="DEFAULT AUTH0 ${NODE_ENV}"
 #  platon:
-#     image: moviedomfo/express_auth  
+#     image: moviedomfo/express_adn  
 #     container_name: platon
 #     ports:
 #       - "3011:3011"
