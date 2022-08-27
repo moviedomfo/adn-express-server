@@ -25,9 +25,8 @@ adnRouter.post("/mutation", async (req: Request, res: Response) => {
 adnRouter.get("/stats", async (req: Request, res: Response) => {
     try {
 
-      const body:MutationDto =  req.body as  MutationDto;
 
-      const result = await adnService.MutationVerify(body);
+      const result = await adnService.Stats();
   
       res.status(200).send(result);
     } catch (e) {
