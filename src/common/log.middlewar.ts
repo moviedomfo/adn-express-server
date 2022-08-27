@@ -12,9 +12,9 @@ export const logsHandler = ( request: Request,  response: Response, next: NextFu
 };
 
 export const logsHandlerADN = ( request: Request,  response: Response, next: NextFunction) => {
-  console.log('---------------------------------');
-  console.log('New adn string to check');
-  console.log(request.body);
-  console.log('---------------------------------');
+  // console.log('---------------------------------');
+  // console.log('New adn string to check');
+  // console.log(request.body);
+  // console.log('---------------------------------');
   next();
 };

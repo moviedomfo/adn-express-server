@@ -1,10 +1,12 @@
-import { IStatsDto } from './StatsDto';
-import { AppConstants } from './../common/commonConstants';
-import { CustomError } from './../common/http-exception';
-import { MutationDto } from "./MutationDto";
+import { IMutationDto } from 'models/MutationDto';
+import { IStatsDto } from 'models/StatsDto';
+import { AppConstants } from '../common/commonConstants';
+import { CustomError } from '../common/http-exception';
+import DNASchema, { IDNASchema } from '../models/adn.schema';
+import  '../db/database';
 
 
-export const MutationVerify = async (req:MutationDto): Promise<boolean> => {
+export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
 
   return new Promise<boolean>((resolve, reject) => {
 
@@ -15,11 +17,45 @@ export const MutationVerify = async (req:MutationDto): Promise<boolean> => {
       hasHoizontalMutation(adnMatrix);
       hasVerticalMutation(adnMatrix);
       validateDiagonal(adnMatrix);
+
+      //persist data as simple string
+      const dna = new DNASchema({
+        dna : req.dna.join()
+      });
+      
+      dna.save();
+
       resolve(true);
 
   });
   
 }
+
+
+export const GetById = async (id:string): Promise<IDNASchema> => {
+
+  return new Promise<IDNASchema>((resolve, reject) => {
+
+    const res =  DNASchema.findById(id)
+
+      resolve(res);
+
+  });
+  
+}
+
+export const GetAll = async (): Promise<IDNASchema[]> => {
+
+  return new Promise<IDNASchema[]>((resolve, reject) => {
+
+    const res =  DNASchema.find();
+
+    resolve(res);
+
+  });
+  
+}
+
 
 export const Stats = async (): Promise<IStatsDto> => {
 
