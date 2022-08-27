@@ -1,0 +1,36 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "noLib": false,
+    "allowJs": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "noEmit": false,
+    "strict": false,
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/node_modules", "**/build", "**/dist", "**/*.md", "**/rollup.config.js"]
+
+  // "$schema": "https://json.schemastore.org/tsconfig",
+  // "display": "Node 14",
+
+  // "compilerOptions": {
+  //   "lib": ["ES6", "ES2016", "DOM","ES2020"],
+  //   "module": "commonjs",
+  //   "target": "ES6",
+   
+  //   "strict": false,
+  //   "esModuleInterop": true,
+  //   "skipLibCheck": true,
+  //   "forceConsistentCasingInFileNames": true
+  // }
+}

@@ -1,0 +1,42 @@
+version: "3.2"
+services:
+  ercules:
+    container_name: ercules
+    image: moviedomfo/express_auth
+    ports:
+      - 3015:${PORT}
+      - 3001:3001
+    environment:
+      - SERVER_NAME="Ercules AUTH0 ${PORT}"
+    networks:
+      net_epiron:
+        ipv4_address: 172.21.0.3
+  platon:
+    image: moviedomfo/express_auth  
+    container_name: platon
+    ports:
+      - 3016:${PORT}
+      - 3002:3001
+    environment:
+       - SERVER_NAME="Platon AUTH0 ${PORT}"
+    networks:
+      net_epiron:
+        ipv4_address: 172.21.0.4
+  nginx:
+    image: nginx:latest
+    restart: always
+    build:
+        context: ./nginx
+    ports:
+       - 6000:80
+       - 443:443
+    networks:
+      net_epiron:
+        ipv4_address: 172.21.0.5
+# networking for the Redis container
+networks:
+   net_epiron:
+     ipam:
+       #driver: default
+       config:
+         - subnet: 172.21.0.0/16
