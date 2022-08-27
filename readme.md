@@ -14,12 +14,12 @@
 
 This API provide two enpoints, one for vheck ADN one for statistical purposes.
 
-  [1]  http://localhost:8626/api/mutations
-  [1]  http://localhost:8626/api/stats
+  [1]  %URL_BASE%/api/mutations
+  [1]  %URL_BASE%/api/stats
     
 ## Run locally
 
-## Validate ADN
+## Validate ADN /api/adn/mutation
 
 This POST enpoint recive an input with this format:
 ```
@@ -27,9 +27,12 @@ This POST enpoint recive an input with this format:
         "dna" :["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
     }
 ```
+
 Returns true if has mutations or false if not
+
+
 ```
-    curl --location --request POST 'http://localhost:3008/api/adn/mutation' \
+    curl --location --request POST '%URL_BASE%/api/adn/mutation' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "dna" :["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
@@ -37,13 +40,16 @@ Returns true if has mutations or false if not
     }'
 ```
 
-## Get stats
+## Get verification stats /api/adn/stats
 
- http://localhost:8626/api/mutations/stats
+URL  http://URL_BASE/api/mutations/stats
+
+Return jsocn with results:
+
+{“count_mutations”:40, “count_no_mutation”:100: “ratio”:0.4}
 
 
-
-
+ curl --location --request GET '%URL_BASE%/api/adn/stats'
 
 
 # Microservices
@@ -66,7 +72,7 @@ docker run -d -p 3008:80 --name express_auth moviedomfo/express_auth
 
  * Navigate to this url to check the if correctly docker container is running 
     
-        http://localhost:3008/api/menu/items
+        %URL_BASE%/api/menu/items
         
 
 ## Docker Composer : Alternatly, you can use compose. Just run these two commands consecutively
