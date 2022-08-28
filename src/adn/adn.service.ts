@@ -14,13 +14,16 @@ export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
 
       const adnMatrix =  createMatriz(req.dna);
          
-      hasHoizontalMutation(adnMatrix);
-      hasVerticalMutation(adnMatrix);
-      validateDiagonal(adnMatrix);
+      let hasMutation = hasHoizontalMutation(adnMatrix);
+      if(!hasMutation)
+        hasVerticalMutation(adnMatrix);
+      if(!hasMutation)
+        validateDiagonal(adnMatrix);
 
       //persist data as simple string
       const dna = new DNASchema({
-        dna : req.dna.join()
+        dna : req.dna.join(),
+        hasMutation
       });
       
       dna.save();
@@ -59,20 +62,36 @@ export const GetAll = async (): Promise<IDNASchema[]> => {
 
 export const Stats = async (): Promise<IStatsDto> => {
 
-  return new Promise<IStatsDto>((resolve, reject) => {
 
-    //
+    let count_mutations =  await DNASchema.collection.countDocuments({
+      hasMutation :true
+    });
+    const count_no_mutation = await  DNASchema.collection.countDocuments({
+      hasMutation :false
+    });
+
+    count_no_mutation ? count_no_mutation:1;
+
+    const ratio = (count_mutations/count_no_mutation);
+
+    
      const stats:IStatsDto={
-      count_mutations: 40,
-      count_no_mutation: 100,
-      ratio: 0.4,
+      count_mutations,
+      count_no_mutation,
+      ratio,
      } 
 
-      resolve(stats);
+     return stats;
 
-  });
   
 }
+export const ClearAll = async (): Promise <void>=> {
+
+   await DNASchema.collection.deleteMany({});
+  
+}
+
+
 
  /**
  * Validate mutation on principal diamatrix diagonal . When i=j
@@ -256,5 +275,7 @@ const getError=(msg:string)=>{
   customError.severity = 'error';
   return customError; 
 }
+
+
 
 
