@@ -11,12 +11,11 @@
 
 ## Intro
 
-This API provide two enpoints, one for vheck ADN one for statistical purposes.
+This API provide two principal enpoints, one for vheck ADN one for statistical purposes.
 
-  [1]  %URL_BASE%/api/mutations
-  [2]  %URL_BASE%/api/stats
+  [1] %URL_BASE%/api/mutations
+  [2] %URL_BASE%/api/stats
     
-
     
 
 ## Validate ADN 
