@@ -16,9 +16,9 @@ export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
          
       let hasMutation = hasHoizontalMutation(adnMatrix);
       if(!hasMutation)
-        hasVerticalMutation(adnMatrix);
+        hasMutation=   hasVerticalMutation(adnMatrix);
       if(!hasMutation)
-        validateDiagonal(adnMatrix);
+        hasMutation= validateDiagonal(adnMatrix);
 
       //persist data as simple string
       const dna = new DNASchema({
@@ -28,7 +28,7 @@ export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
       
       dna.save();
 
-      resolve(true);
+      resolve(hasMutation);
 
   });
   
@@ -62,26 +62,29 @@ export const GetAll = async (): Promise<IDNASchema[]> => {
 
 export const Stats = async (): Promise<IStatsDto> => {
 
+  return new Promise<IStatsDto>(async (resolve) => {
 
-    let count_mutations =  await DNASchema.collection.countDocuments({
+    const count_mutations = await  DNASchema.collection.countDocuments({
       hasMutation :true
-    });
-    const count_no_mutation = await  DNASchema.collection.countDocuments({
+     });
+    let count_no_mutation = await  DNASchema.collection.countDocuments({
       hasMutation :false
     });
-
-    count_no_mutation ? count_no_mutation:1;
-
-    const ratio = (count_mutations/count_no_mutation);
-
     
-     const stats:IStatsDto={
-      count_mutations,
-      count_no_mutation,
-      ratio,
-     } 
+   
+    const ratio =count_no_mutation !== 0 ? (count_mutations/count_no_mutation) : 0;
+   
+       
+        const stats:IStatsDto={
+         count_mutations,
+         count_no_mutation,
+         ratio : ratio,
+        } ;
+      resolve(stats);
 
-     return stats;
+  });
+
+
 
   
 }
@@ -148,8 +151,9 @@ function hasHoizontalMutation(matrix:string[][]):boolean{
 
       const isMath = regex.exec(partialAdnString);
 
-      if(isMath) return true;//short circuit
+     if(isMath) return true;//short circuit
 
+      // uncomment only for logs and detect all mutated strings
       // if (isMath) {
       //   hasMutation = true;
       //   console.log(`Mutacion --> in col ${j} ` + partialAdnString);
@@ -179,6 +183,9 @@ function hasHoizontalMutation(matrix:string[][]):boolean{
     const isMath = regex.exec(diag.join());
 
     return isMath ? true:false; 
+
+    // uncomment only for logs and detect all mutated strings
+
     // if(isMath)
     // {
     //   console.log(`Mutacion in diagonal  --> `  + diag.join()) 
