@@ -251,7 +251,8 @@ function createMatriz(dna:string[]):string[][]{
     adnMatrix[i]= row; 
   } 
   chekCharacters(adnMatrix);
-  console.table(adnMatrix);
+  // uncoment if you need logs to test
+  //console.table(adnMatrix);
   return adnMatrix;
 }
 
