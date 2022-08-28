@@ -3,8 +3,9 @@
  API to validate ADN strings mutations
 ## Table of Contents
 
-- [Intro ](#Intro)
-- [Validate ADN](#Getting-started)
+- [Intro](#Intro)
+- [Validate ADN](#Validate-ADN)
+- [Database](#mongodb-hosted)
 - [Run locally](#Run-locally)
 - [Dockerize](#Dockerize)
 
@@ -71,12 +72,12 @@ Return jsocn with results:
 ## mongodb hosted
 
 I allocate cloud mongodb as stotrage on Mongo de Atlas
-     [link] (https://cloud.mongodb.com/v2/630a921cca5d9915ccb37d0a#security/database/users)
+     [link](https://cloud.mongodb.com/v2/630a921cca5d9915ccb37d0a#security/database/users)
 
 ## regExp 
 
  We use this regular exprssion to validate if an string contains 4 continuos characters
-    [regex101] (https://regex101.com/r/qA0aS0/1) with this expression:  *\b(?=[a-z\d]*([a-z\d])\1{3}|\d+\b)[a-z\d]+
+    [regex101](https://regex101.com/r/qA0aS0/1) with this expression:  *\b(?=[a-z\d]*([a-z\d])\1{3}|\d+\b)[a-z\d]+
 
 # Microservices
 
