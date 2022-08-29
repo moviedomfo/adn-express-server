@@ -1,5 +1,5 @@
 # BUILD STEP
-FROM node:16.7.0-alpine as build
+FROM node:14.5.0-alpine as build
 
 WORKDIR /app
 ADD ./package.json .
@@ -11,7 +11,7 @@ ADD ./dist ./dist
 # RUN npm run build
 
 # CREATE IMAGE STEP
-FROM node:16.7.0-alpine
+FROM node:14.5.0-alpine
 LABEL maintainer="Pelsoft SF by @moviedo"
 
 # RUN npm install pm2@3.5.1 -g
@@ -34,7 +34,7 @@ EXPOSE ${PORT}
 # EXPOSE ${PM2_HEALTH_PORT}
 
 # CMD pm2-runtime start pm2.json --web ${PM2_HEALTH_PORT}
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "index.js" ]
 # CMD npm run start
 
 

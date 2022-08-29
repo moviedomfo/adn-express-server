@@ -6,7 +6,7 @@
   "scripts": {
     "dev1": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
     "start": "tsc && babel-node --extensions \".ts\" src/index.ts",
-    "build": "tsc && babel src -d dist --source-maps --copy-files",
+    "build": "tsc && babel src -d dist --source-maps",
     "restart": "rimraf dist && npm run build",
     "start1": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run start1"
