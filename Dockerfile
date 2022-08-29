@@ -5,7 +5,8 @@ WORKDIR /app
 ADD ./package.json .
 ADD ./src ./src
 ADD ./.babelrc ./
-RUN npm install
+RUN npm install --production
+
 ADD ./dist ./dist
 # RUN npm run build
 
@@ -25,7 +26,7 @@ COPY --from=build /app/node_modules ./node_modules
 # ADD ./pm2.json .
 ADD ./.env.production ./.env
 
-# ENV PORT 2008
+# ENV PORT 3008
 # ENV PM2_HEALTH_PORT 3001
 ENV NODE_ENV production
 
@@ -34,6 +35,8 @@ EXPOSE ${PORT}
 
 # CMD pm2-runtime start pm2.json --web ${PM2_HEALTH_PORT}
 CMD [ "node", "dist/index.js" ]
+# CMD npm run start
+
 
 
 

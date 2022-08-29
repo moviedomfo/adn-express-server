@@ -1,5 +1,7 @@
 
-
+/**
+ * Common constats
+ */
 export  const AppConstants = {
     
      Verion: process.env.APP_VERSION as string  ,
