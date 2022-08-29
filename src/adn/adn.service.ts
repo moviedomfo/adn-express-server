@@ -1,14 +1,14 @@
 import { IMutationDto } from 'models/MutationDto';
 import { IStatsDto } from 'models/StatsDto';
 import { AppConstants } from '../common/commonConstants';
-import { CustomError } from '../common/http-exception';
+import { AppError } from '../common/http-exception';
 import DNASchema, { IDNASchema } from '../models/adn.schema';
 import  '../db/database';
 
 
 export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
 
-  return new Promise<boolean>((resolve, reject) => {
+  return new Promise<boolean>((resolve) => {
 
       validateMatrixFormat(req.dna);
 
@@ -62,7 +62,7 @@ export const GetAll = async (): Promise<IDNASchema[]> => {
 
 export const Stats = async (): Promise<IStatsDto> => {
 
-  return new Promise<IStatsDto>(async (resolve) => {
+  return new Promise<IStatsDto>(async (resolve,reject) => {
 
     const count_mutations = await  DNASchema.collection.countDocuments({
       hasMutation :true
@@ -70,6 +70,7 @@ export const Stats = async (): Promise<IStatsDto> => {
     let count_no_mutation = await  DNASchema.collection.countDocuments({
       hasMutation :false
     });
+    
     
    
     const ratio =count_no_mutation !== 0 ? (count_mutations/count_no_mutation) : 0;
@@ -218,7 +219,7 @@ function validateMatrixFormat(adn:string[]):void{
 
   // if it is not square reject
   if(m!== m)
-    throw Error(`ADN number of columns ${n} are not equals to rows ${m}`);
+    throw new AppError(400 ,`ADN number of columns ${n} are not equals to rows ${m}`);
 
   //Chek if all rows contains the same number of characters.
   // I'm using do-while only for code variations 
@@ -226,7 +227,7 @@ function validateMatrixFormat(adn:string[]):void{
   do {
     
      if(adn[i].length !== n  ){
-      throw Error(`Not all cols are equals`)
+      throw new AppError(400,`Not all cols are equals`)
      }
      i++;
     
@@ -269,20 +270,13 @@ function chekCharacters(matrix:string[][]){
     for (let j=0; j < matrix.length ; j++){ 
       if(!allowebChars.includes(matrix[i][j]))
       {
-        throw Error(`The character ${matrix[i][j]} is not allowed. pleasse check char ${[j+1]} in line ${i+1} `)
+        throw new AppError(400, `The character ${matrix[i][j]} is not allowed. pleasse check char ${[j+1]} in line ${i+1} `)
       }
     } 
   } 
   
 }
 
-const getError=(msg:string)=>{
-  let customError:CustomError= new CustomError();
-  customError.message= msg;
-  customError.status= '500';
-  customError.severity = 'error';
-  return customError; 
-}
 
 
 

@@ -1,12 +1,11 @@
-import { Request, Response } from "express";
-import * as express from "express";
+import express ,{ Request, Response,NextFunction  } from "express";
 import * as adnService from "./adn.service";
 import { IMutationDto } from "models/MutationDto";
-import { IStatsDto } from "models/StatsDto";
+import { AppError } from "../common/http-exception";
 
 export const adnRouter = express.Router();
 
-adnRouter.post("/mutation", async (req: Request, res: Response) => {
+adnRouter.post("/mutation", async (req: Request, res: Response,next: NextFunction) => {
     try {
 
       const body:IMutationDto =  req.body as  IMutationDto;
@@ -18,21 +17,24 @@ adnRouter.post("/mutation", async (req: Request, res: Response) => {
         res.status(403).send();
       
     } catch (e) {
-      res.status(500).send(e.message);
+      next(e);
     }
   });
 
-  adnRouter.get("/stats", async (req: Request, res: Response) => {
+
+adnRouter.get("/stats", async (req: Request, res: Response,next: NextFunction) => {
     try {
       const result = await adnService.Stats();
 
       res.status(200).send(result);
+
     } catch (e) {
-      res.status(500).send(e.message);
+      
+      next(e);
     }
   });
 
-  adnRouter.get("/:id", async (req: Request, res: Response) => {
+  adnRouter.get("/:id", async (req: Request, res: Response,next: NextFunction) => {
     try {
 
       const id =  req.params.id;
@@ -43,32 +45,30 @@ adnRouter.post("/mutation", async (req: Request, res: Response) => {
       else
       res.status(204).send();
     } catch (e) {
-      res.status(500).send(e.message);
+      next(e);
     }
   });
 
-  adnRouter.get("/", async (req: Request, res: Response) => {
+  adnRouter.get("/", async (req: Request, res: Response,next: NextFunction) => {
     try {
       const result = await adnService.GetAll();
 
       if (result) res.status(200).send(result);
       else res.status(204).send();
     } catch (e) {
-      res.status(500).send(e.message);
-    }
+      next(e);    }
   });
 
 
 
 
-  adnRouter.delete("/mutation", async (req: Request, res: Response) => {
+  adnRouter.delete("/mutation", async (req: Request, res: Response,next: NextFunction) => {
     try {
 
       await adnService.ClearAll();
   
       res.status(200).send(true);
     } catch (e) {
-      res.status(500).send(e.message);
-    }
+      next(e);    }
   });
   

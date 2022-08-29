@@ -1,25 +1,18 @@
 import 'dotenv/config'
-
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-
 import { adnRouter } from "./adn/adn.router";
 import morgan from 'morgan';
-
 import { notFoundHandler } from "./common/not-found.middleware";
-
-import { logsHandler,logsHandlerADN } from "./common/log.middlewar";
+import { errorHandler } from './common/http-exception';
 
 require('dotenv').config();
-
-
 
  if (!process.env.PORT) {
     process.exit(1);
  }
  
- //const PORT: number = parseInt(process.env.PORT as string, 10);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -49,14 +42,13 @@ app.get('/', function (req, res) {
  })
 /** Parse the request */
 //itemsRouter.use(express.urlencoded({ extended: false }));
-app.use(logsHandlerADN);
+
 
 app.use('/api/adn',adnRouter);
-
-
-
-// errorHandler won't catch 404 errors. 
+// Attach the first Error handling Middleware
 app.use(notFoundHandler);
+app.use(errorHandler);
+
  
 
 /**
