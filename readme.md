@@ -93,10 +93,10 @@ You can use docker to deploy the api server. In this releasse we leave a dockerf
  * run container
  
 ```
-docker run -d -p 3008:80 --name express_adn moviedomfo/express_adn  
+docker run -d -p 3008:3008 --name express_adn moviedomfo/express_adn  
 ```
 
  * Navigate to this url to check the if correctly docker container is running 
     
-        http://localhost:3008/index.html
+        http://localhost:3008
         
