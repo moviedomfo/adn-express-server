@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from "express";
+import path from 'path';
 import cors from "cors";
 import helmet from "helmet";
 import { adnRouter } from "./adn/adn.router";
@@ -16,7 +17,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
+app.set('views',path.join(__dirname,'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 /**
  *  App Configuration
  */
@@ -37,14 +40,24 @@ app.use(morgan('short'));
 
 // /** Logging */
 // authRouter.use(morgan('dev'));
-app.get('/', function (req, res) {
-   res.send('This Apps is --> ' +  process.env.SERVER_NAME )
- })
+
+ app.get('/', function (req, res) {
+    //res.send('Wellcome to ADN mutiation detector' );
+    res.render('index');
+  })
+  
+
+
+
+ 
+
 /** Parse the request */
 //itemsRouter.use(express.urlencoded({ extended: false }));
 
 
 app.use('/api/adn',adnRouter);
+
+
 // Attach the first Error handling Middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
@@ -55,6 +68,6 @@ app.use(errorHandler);
  * Server Activation
  */
  app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+    console.log(`App listening on port ${PORT}`);
   });
 
