@@ -100,3 +100,32 @@ docker run -d -p 3008:3008 --name express_adn moviedomfo/express_adn
     
         http://localhost:3008
         
+
+## Heroku deployment errors
+    This app was deployed on https://and-verify.herokuapp.com:
+
+Posible heroku console errors 
+
+-DB does not connect on Heroku Server
+    error: MongoNetworkError: connection <monitor> to 54.94.72.227:27017
+
+    Solution. We need to add aur ip (app hosted on heroku) in Network witelist . 
+        1- go to mongodb atlas
+        2- click security → Network Access → ADD IP ADDRESS → Choose allow access from anywhere and save
+        3- click connect and get your application to your code and paste to your application.
+
+        Or
+        Temporally you can add 0.0.0.0/0 to allow all entry
+        1- click security → Network Access → ADD IP ADDRESS → Choose allow access from anywhere and save
+
+- /tmp/build-7ad17965.sh: 1: tsc: not found heroku
+    Set  Envirompent <> production NODE_ENV:dev This is due to heroku work on production mode and remove devDependencies -> ej tsc
+ 
+- To View logs on heroku
+ 
+    ```
+    heroku git:clone -a and-verify 
+    ```
+
+- Logoing using key
+     heroku login
