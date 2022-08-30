@@ -11,9 +11,7 @@
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run start1",
     "tsc": "./node_modules/typescript/bin/tsc",
-    "postinstall": "npm run tsc",
-    
-
+    "postinstall": "npm run tsc"
   },
   "author": "moviedo",
   "license": "ISC",
