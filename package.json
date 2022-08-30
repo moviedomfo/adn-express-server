@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev1": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
-    "start__": "tsc && babel-node --extensions \".ts\" src/index.ts",
+    "start1": "tsc && babel-node --extensions \".ts\" src/index.ts",
     "build": "tsc && babel src -d dist --source-maps --copy-files",
     "restart": "rimraf dist && npm run build",
     "start": "npm run build && node dist/index.js",
-    "dev": "nodemon --exec npm run start1"
+    "dev": "nodemon --exec npm run start1",
+    
+    "start_": "node dist/index.js"
+
   },
   "author": "moviedo",
   "license": "ISC",
