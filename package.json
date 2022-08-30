@@ -10,7 +10,8 @@
     "restart": "rimraf dist && npm run build",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon --exec npm run start1",
-    
+    "postinstall": "tsc",
+
     "start_": "node dist/index.js"
 
   },
