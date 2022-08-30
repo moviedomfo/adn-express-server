@@ -15,7 +15,7 @@ require('dotenv').config();
  }
  
 const app = express();
-const PORT = process.env.PORT || 3000;
+
 
 app.set('views',path.join(__dirname,'views'));
 app.engine('html', require('ejs').renderFile);
@@ -67,7 +67,7 @@ app.use(errorHandler);
 /**
  * Server Activation
  */
- app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
+ app.listen(process.env.PORT || 5000, () => {
+    console.log(`App listening on port ${process.env.PORT || 5000}`);
   });
 
