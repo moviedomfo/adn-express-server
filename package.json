@@ -1,6 +1,6 @@
 {
-  "name": "expressauth0",
-  "version": "1.0.0",
+  "name": "adn-verify",
+  "version": "1.2.0",
   "description": "Express server that expose API that check ADN mutations",
   "main": "index.js",
   "scripts": {
