@@ -1,16 +1,19 @@
 import express ,{ Request, Response,NextFunction  } from "express";
-import * as adnService from "./adn.service";
+// import * as adnService from "./adn.service";
+import ADNController from "./adn.service";
 import { IMutationDto } from "models/MutationDto";
-import { AppError } from "../common/http-exception";
+import { AppError } from "../../common/http-exception";
+import ServiceFactory from "../../services/ServiceFactory";
 
 export const adnRouter = express.Router();
+const adnService =  ServiceFactory.CreateIADNService ();
 
 adnRouter.post("/mutation", async (req: Request, res: Response,next: NextFunction) => {
     try {
 
       const body:IMutationDto =  req.body as  IMutationDto;
-
-      const result = await adnService.MutationVerify(body);
+      
+      const result = await adnService.Mutation(body);
       if(result)
         res.status(200).send();
       else 
@@ -38,7 +41,6 @@ adnRouter.get("/stats", async (req: Request, res: Response,next: NextFunction) =
     try {
 
       const id =  req.params.id;
-
       const result = await adnService.GetById(id);
       if(result)
         res.status(200).send(result);
@@ -50,7 +52,7 @@ adnRouter.get("/stats", async (req: Request, res: Response,next: NextFunction) =
   });
 
   adnRouter.get("/", async (req: Request, res: Response,next: NextFunction) => {
-    try {
+    try { 
       const result = await adnService.GetAll();
 
       if (result) res.status(200).send(result);
@@ -64,7 +66,6 @@ adnRouter.get("/stats", async (req: Request, res: Response,next: NextFunction) =
 
   adnRouter.delete("/mutation", async (req: Request, res: Response,next: NextFunction) => {
     try {
-
       await adnService.ClearAll();
   
       res.status(200).send(true);

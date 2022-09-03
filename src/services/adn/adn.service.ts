@@ -1,12 +1,56 @@
 import { IMutationDto } from 'models/MutationDto';
 import { IStatsDto } from 'models/StatsDto';
-import { AppConstants } from '../common/commonConstants';
-import { AppError } from '../common/http-exception';
-import DNASchema, { IDNASchema } from '../models/adn.schema';
-import  '../db/database';
+import { AppConstants } from '../../common/commonConstants';
+import { AppError } from '../../common/http-exception';
+import DNASchema, { IDNASchema } from '../../models/adn.schema';
+import  '../../db/database';
+import { Body, Get, Path, Post, Route } from "tsoa";
+
+export interface IADNService{
+  Mutation : (req:IMutationDto)=> Promise<boolean> ;
+  GetById:(id:string)=> Promise<IDNASchema>;
+  GetAll:()=> Promise<IDNASchema[]> ;
+  ClearAll:()=> Promise<void> ;
+  Stats:()=> Promise<IStatsDto> 
+}
+
+@Route("ADNService")
+export default class ADNService implements IADNService {
+
+  @Post("/mutation")
+  public async Mutation(
+    @Body() 
+    req:IMutationDto): Promise<boolean> {
+    return  mutationVerify(req);
+  }
 
 
-export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
+  @Get("/getById")
+  public async GetById(@Path() id:string): Promise<IDNASchema> {
+    return  getById(id);
+  }
+
+
+  @Get("/getAll")
+  public async GetAll(): Promise<IDNASchema[]> {
+    return  getAll();
+  }
+
+  @Get("/clearAll")
+  public async ClearAll(): Promise<void> {
+    return  clearAll();
+  }
+
+  @Get("/stats")
+  public async Stats(): Promise<IStatsDto> {
+    return  stats();
+  }
+
+}
+
+
+
+ const mutationVerify = async (req:IMutationDto): Promise<boolean> => {
 
   return new Promise<boolean>((resolve) => {
 
@@ -35,7 +79,7 @@ export const MutationVerify = async (req:IMutationDto): Promise<boolean> => {
 }
 
 
-export const GetById = async (id:string): Promise<IDNASchema> => {
+ const getById = async (id:string): Promise<IDNASchema> => {
 
   return new Promise<IDNASchema>((resolve, reject) => {
 
@@ -47,7 +91,7 @@ export const GetById = async (id:string): Promise<IDNASchema> => {
   
 }
 
-export const GetAll = async (): Promise<IDNASchema[]> => {
+ const getAll = async (): Promise<IDNASchema[]> => {
 
   return new Promise<IDNASchema[]>((resolve, reject) => {
 
@@ -60,7 +104,7 @@ export const GetAll = async (): Promise<IDNASchema[]> => {
 }
 
 
-export const Stats = async (): Promise<IStatsDto> => {
+ const stats = async (): Promise<IStatsDto> => {
 
   return new Promise<IStatsDto>(async (resolve,reject) => {
 
@@ -89,7 +133,7 @@ export const Stats = async (): Promise<IStatsDto> => {
 
   
 }
-export const ClearAll = async (): Promise <void>=> {
+ const clearAll = async (): Promise <void>=> {
 
    await DNASchema.collection.deleteMany({});
   

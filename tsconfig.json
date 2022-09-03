@@ -16,6 +16,8 @@
     "baseUrl": "./src",
     "noEmit": false,
     "strict": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/node_modules", "**/build", "**/dist", "**/*.md", "**/rollup.config.js"]
