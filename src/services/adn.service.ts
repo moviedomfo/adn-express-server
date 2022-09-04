@@ -1,10 +1,11 @@
-import { IMutationDto } from 'models/MutationDto';
-import { IStatsDto } from 'models/StatsDto';
-import { AppConstants } from '../../common/commonConstants';
-import { AppError } from '../../common/http-exception';
-import DNASchema, { IDNASchema } from '../../models/adn.schema';
-import  '../../db/database';
+import { IMutationDto } from '../models/MutationDto';
+import { IStatsDto } from '../models/StatsDto';
+import { AppConstants } from '../common/commonConstants';
+import { AppError } from '../common/http-exception';
+import DNASchema, { IDNASchema } from '../models/adn.schema';
+import  '../db/database';
 import { Body, Get, Path, Post, Route } from "tsoa";
+import { injectable, inject } from "inversify";
 
 export interface IADNService{
   Mutation : (req:IMutationDto)=> Promise<boolean> ;
@@ -14,6 +15,7 @@ export interface IADNService{
   Stats:()=> Promise<IStatsDto> 
 }
 
+@injectable()
 @Route("ADNService")
 export default class ADNService implements IADNService {
 

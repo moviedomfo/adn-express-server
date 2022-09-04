@@ -1,4 +1,4 @@
-import ADNService, { IADNService } from "./adn/adn.service";
+import ADNService, { IADNService } from "./adn.service";
 
 export default class ServiceFactory{
  

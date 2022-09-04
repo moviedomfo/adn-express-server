@@ -12,7 +12,6 @@
     "dev": "nodemon --exec npm run start1",
     "tsc": "./node_modules/typescript/bin/tsc",
     "postinstall": "npm run tsc",
-
     "build-swagger": "tsoa spec-and-routes && tsc && babel src -d dist --source-maps --copy-files",
     "predev": "npm run swagger",
     "swagger": "tsoa spec"
@@ -27,9 +26,12 @@
     "express-handlebars": "^6.0.6",
     "express-jwt": "^6.1.0",
     "helmet": "^4.6.0",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
     "jwks-rsa": "^2.0.5",
     "mongoose": "^6.5.3",
     "morgan": "^1.10.0",
+    "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0",
     "tsoa": "^4.1.2"
