@@ -129,3 +129,12 @@ Posible heroku console errors
 
 - Logoing using key
      heroku login
+
+
+# swagger & tsoa
+
+Para documentar los controllers debemos usar tsoa
+   "build-tsoa": "tsoa spec-and-routes" genera las Rutas en base a los controllers documentados con los docoradores tsoa
+   "predev": "npm run swagger", genera el json para que swagger levante la pagina con la documentacion
+
+   Hay que ver que tenemos configurado en ./tsoa.json para ver el destino de la transpilacion de las rutas

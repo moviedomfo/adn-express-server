@@ -1,73 +1,65 @@
+import { IMutationDto } from "../models/MutationDto";
+import  IADNService  from "../services/adn.service";
+// import { DELETE, GET, POST, route } from "awilix-express";
+import {Get, Post, Route, Body, Query, Header, Path, SuccessResponse, Controller, Request, Response,Delete } from 'tsoa';
 
-import { TYPES } from "../common/types";
-import { Request, Response, NextFunction } from "express";
-import { IMutationDto } from "models/MutationDto";
-import { IADNService } from "../services/adn.service";
-import ServiceFactory from "../services/ServiceFactory";
-import {  inject } from "inversify";
 
-const adnService = ServiceFactory.CreateIADNService();
+@Route('adn')
+export default class adnController  extends Controller{
+  adnService: IADNService ;
+  
+  constructor(adnService: IADNService ) {
+    super();
 
-export default class ADNController {
-  adnService: IADNService;
+    this.adnService = adnService;
 
-  constructor(@inject(TYPES.ADNService) adnService: IADNService) {
-
-      //_adnService = ServiceFactory.CreateIADNService();
-      this.adnService = adnService;
   }
 
-  async mutation(req: Request, res: Response, next: NextFunction) {
-    try {
-      const mutationDTO: IMutationDto = req.body as IMutationDto;
-      const result = await adnService.Mutation(mutationDTO);
-      if (result) res.status(200).send();
-      else res.status(403).send();
-    } catch (e) {
-      next(e);
-    }
+  
+  @SuccessResponse("201", "Created")
+  @Post()
+  public async Mutation( @Body() req: IMutationDto) {
+    
+      const result = await this.adnService.Mutation(req);
+      if (result)  this.setStatus(200);  
+      else  this.setStatus(403); 
+    
   }
 
-  async stats(req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await adnService.Stats();
-      res.status(200).send(result);
-    } catch (e) {
-      next(e);
-    }
+  @Get('/stats')
+  public async Stats(  ) {
+    
+      const result = await this.adnService.Stats();
+      this.setStatus(200);  
   }
 
+  @Get()
+  public async GetAll(  ) {
+    
+    console.log('.-------------------------get alll....................');
+      const result = await this.adnService.GetAll();
 
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await adnService.GetAll();
-
-      if (result) res.status(200).send(result);
-      else res.status(204).send();
-    } catch (e) {
-      next(e);
-    }
+      if (result) this.setStatus(200);  
+      else this.setStatus(204);  
+   
   }
 
-  async getById(req: Request, res: Response, next: NextFunction) {
-    try {
-      const id =  req.params.id;
-      const result = await adnService.GetById(id);
+   @Get('{id}')
+  public async GetById( @Path() id: string ) {
 
-      if (result) res.status(200).send(result);
-      else res.status(204).send();
-    } catch (e) {
-      next(e);
-    }
+    //const id =  req.params.id;
+      const result = await this.adnService.GetById(id);
+
+      if (result) this.setStatus(200);  
+      else this.setStatus(204);  
   }
 
-  async deleteAll(req: Request, res: Response, next: NextFunction) {
-    try {
+  @Delete()
+  public async ClearAll(  ) {
+    
       
-      const result = await adnService.ClearAll();
-       res.status(200).send(true);
-    } catch (e) {
-      next(e);
-    }
+       await this.adnService.ClearAll();
+       this.setStatus(200);  
+      
   }
 }

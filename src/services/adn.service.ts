@@ -4,46 +4,50 @@ import { AppConstants } from '../common/commonConstants';
 import { AppError } from '../common/http-exception';
 import DNASchema, { IDNASchema } from '../models/adn.schema';
 import  '../db/database';
-import { Body, Get, Path, Post, Route } from "tsoa";
-import { injectable, inject } from "inversify";
+
 
 export interface IADNService{
   Mutation : (req:IMutationDto)=> Promise<boolean> ;
   GetById:(id:string)=> Promise<IDNASchema>;
   GetAll:()=> Promise<IDNASchema[]> ;
   ClearAll:()=> Promise<void> ;
-  Stats:()=> Promise<IStatsDto> 
+  Stats:()=> Promise<IStatsDto> ;
+  Test:()=> Promise<string> ;
 }
 
-@injectable()
-@Route("ADNService")
+// @Route("ADNService")
 export default class ADNService implements IADNService {
 
-  @Post("/mutation")
-  public async Mutation(
-    @Body() 
-    req:IMutationDto): Promise<boolean> {
+  public async Test():Promise<string>{
+    return new Promise<string>((resolve) => {
+      resolve("ADNService works fine ");
+    });
+  }
+
+  // @Post("/mutation")
+  public async Mutation(// @Body() 
+     req:IMutationDto): Promise<boolean> {
     return  mutationVerify(req);
   }
 
 
-  @Get("/getById")
-  public async GetById(@Path() id:string): Promise<IDNASchema> {
+  // @Get("/getById")
+  public async GetById(id:string): Promise<IDNASchema> {
     return  getById(id);
   }
 
 
-  @Get("/getAll")
+  // @Get("/getAll")
   public async GetAll(): Promise<IDNASchema[]> {
     return  getAll();
   }
 
-  @Get("/clearAll")
+  // @Get("/clearAll")
   public async ClearAll(): Promise<void> {
     return  clearAll();
   }
 
-  @Get("/stats")
+  // @Get("/stats")
   public async Stats(): Promise<IStatsDto> {
     return  stats();
   }
