@@ -1,29 +1,30 @@
-import 'dotenv/config'
-import express from "express";
+import 'dotenv/config';
+import express from 'express';
 import path from 'path';
-import cors from "cors";
-import helmet from "helmet";
-import { adnRouter } from "./adn/adn.router";
+import cors from 'cors';
+import helmet from 'helmet';
+import { adnRouter } from './infra/adn.router';
 import morgan from 'morgan';
-import { notFoundHandler } from "./common/not-found.middleware";
+import { notFoundHandler } from './common/not-found.middleware';
 import { errorHandler } from './common/http-exception';
 
 require('dotenv').config();
 
- if (!process.env.PORT) {
-    process.exit(1);
- }
- 
+if (!process.env.PORT) {
+  process.exit(1);
+}
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-
-app.set('views',path.join(__dirname,'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 /**
  *  App Configuration
  */
 app.use(helmet());
+
 app.use(cors());
 app.use(express.json());
 
@@ -34,40 +35,29 @@ app.use(express.json());
 //:remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms
 app.use(morgan('short'));
 
-
 // /** Logging */
 // itemsRouter.use(morgan('dev'));
 
 // /** Logging */
 // authRouter.use(morgan('dev'));
 
- app.get('/', function (req, res) {
-    //res.send('Wellcome to ADN mutiation detector' );
-    res.render('index');
-  })
-  
-
-
-
- 
+app.get('/', function (req, res) {
+  //res.send('Wellcome to ADN mutiation detector' );
+  res.render('index');
+});
 
 /** Parse the request */
 //itemsRouter.use(express.urlencoded({ extended: false }));
 
-
-app.use('/api/adn',adnRouter);
-
+app.use('/api/adn', adnRouter);
 
 // Attach the first Error handling Middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
 
- 
-
 /**
  * Server Activation
  */
- app.listen(process.env.PORT || 5000, () => {
-    console.log(`App listening on port ${process.env.PORT || 5000}`);
-  });
-
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`App listening on port ${process.env.PORT || 5000}`);
+});
