@@ -1,5 +1,5 @@
+import { ValidateMutationDto } from './../domain/dto/ValidateMutationDto';
 import { Request, Response, NextFunction } from 'express';
-import { ValidateMutationDto } from 'domain/dto/ValidateMutationDto';
 import * as AdnService from '../app/adn.service';
 
 export class ADNController {

@@ -1,6 +1,4 @@
-
-
-import { AppConstants } from 'common/commonConstants';
+import { AppConstants } from './../../common/commonConstants';
 import { connect } from 'mongoose';
 
 (async () => {

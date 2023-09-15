@@ -1,8 +1,8 @@
-import { ValidateMutationDto } from 'domain/dto/ValidateMutationDto';
+import { IStatsDto } from './../domain/dto/GetStatsDto';
+import { ValidateMutationDto } from './../domain/dto/ValidateMutationDto';
 import { AppConstants } from '../common/commonConstants';
 import { AppError } from '../common/http-exception';
 import DNASchema, { IDNASchema } from '../infra/schemas/adn.schema';
-import { IStatsDto } from 'domain/dto/GetStatsDto';
 
 import '../infra/db/database';
 
