@@ -7,7 +7,7 @@ import { adnRouter } from './infra/adn.router';
 import morgan from 'morgan';
 import { notFoundHandler } from './common/not-found.middleware';
 import { errorHandler } from './common/http-exception';
-
+import './infra/db/MondoDatabase';
 require('dotenv').config();
 
 if (!process.env.PORT) {

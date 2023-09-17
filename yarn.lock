@@ -1691,6 +1691,11 @@ encodeurl@~1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
 
+env-var@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/env-var/-/env-var-7.4.1.tgz#88af75fe16cc11031000f88d4777802c6958a01c"
+  integrity sha512-H8Ga2SbXTQwt6MKEawWSvmxoH1+J6bnAXkuyE7eDvbGmrhIL2i+XGjzGM3DFHcJu8GY1zY9/AnBJY8uGQYPHiw==
+
 es-abstract@^1.22.1:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.22.1.tgz#8b4e5fc5cefd7f1660f0f8e1a52900dfbc9d9ccc"

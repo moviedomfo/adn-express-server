@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  app:
+    container_name: express_adn
+    image: moviedomfo/express_adn
+    ports:
+      - '3003:3003'
+      - '3001:3001'
+    environment:
+      - PORT=${PORT}
+      - SERVER_NAME="DEFAULT AUTH0 ${NODE_ENV}"
+  mongodb:
+    image: mongo:latest
+    container_name: pelsoft-mongodb
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongodata:/data/db
+#  platon:
+#     image: moviedomfo/express_adn
+#     container_name: platon
+#     ports:
+#       - "3011:3011"
+#       - "3002:3001"
+#     environment:
+#       - PORT=3011
+#  nginx:
+#     image: nginx:latest
+#     restart: always
+#     build:
+#         context: ./nginx
+#     ports:
+#        - 6000:80
+#        - 443:443

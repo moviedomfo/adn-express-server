@@ -1,7 +1,7 @@
 import { IADNRepository } from './../app/IADNRepository';
 import { ValidateMutationDto } from '../domain/dto/ValidateMutationDto';
 import DNASchema, { IDNASchema } from '../infra/schemas/adn.schema';
-import './db/database'
+
 export default class ADNMongoRepository implements IADNRepository {
   public Create = async (
     validateMutationDto: ValidateMutationDto,
