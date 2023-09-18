@@ -1,3 +1,4 @@
+import { AppConstants } from './common/commonConstants';
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
@@ -10,12 +11,11 @@ import { errorHandler } from './common/http-exception';
 import './infra/db/MondoDatabase';
 require('dotenv').config();
 
-if (!process.env.PORT) {
+if (!AppConstants.PORT) {
   process.exit(1);
 }
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -34,15 +34,10 @@ app.use(express.json());
 //app.use(morgan('tiny'));
 //:remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms
 app.use(morgan('short'));
-
-// /** Logging */
 // itemsRouter.use(morgan('dev'));
 
-// /** Logging */
-// authRouter.use(morgan('dev'));
 
 app.get('/', function (req, res) {
-  //res.send('Wellcome to ADN mutiation detector' );
   res.render('index');
 });
 
@@ -58,6 +53,6 @@ app.use(errorHandler);
 /**
  * Server Activation
  */
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`App listening on port ${process.env.PORT || 5000}`);
+app.listen(AppConstants.PORT, () => {
+  console.log(`App listening on port ${AppConstants.PORT}`);
 });
