@@ -20,33 +20,53 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-/**
- *  App Configuration
- */
-app.use(helmet());
 
+app.use(morgan('short'));
+// app.use(helmet());
+// Sets all of the defaults, but overrides `script-src`
+// and disables the default `style-src`.
+//Esto permitirá la ejecución de scripts desde cdn.jsdelivr.net
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'script-src': ["'self'", 'cdn.jsdelivr.net'],
+
+        'style-src': [
+          "'self'",
+          'cdn.jsdelivr.net',
+          "'self'",
+          "'unsafe-inline'",
+        ],
+      },
+    },
+  })
+);
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 
 //logger middleware--> ::1 - - [13/Jan/2022:15:23:23 +0000] "GET /api/fakes/gertUsers HTTP/1.1" 200 801 "-" "PostmanRuntime/7.28.4"
 //app.use(morgan('combined'));
 // logger middleware --> GET /api/fakes/gertUsers 200 801 - 190.525 ms
 //app.use(morgan('tiny'));
 //:remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms
-app.use(morgan('short'));
-// itemsRouter.use(morgan('dev'));
 
-
-app.get('/', function (req, res) {
+app.get('/', function (_req, res) {
   res.render('index');
 });
-
-/** Parse the request */
-//itemsRouter.use(express.urlencoded({ extended: false }));
+app.get('/health', function (_req, res) {
+  res.send(`ADN demo server ${AppConstants.APP_VERSION}  successfully`);
+  // res.render('health', {
+  //   APP_VERSION: AppConstants.APP_VERSION,
+  //   COMPANY: AppConstants.COMPANY,
+  // });
+});
 
 app.use('/api/adn', adnRouter);
 
-// Attach the first Error handling Middleware
+// error handling Middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
 

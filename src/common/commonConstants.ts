@@ -5,7 +5,7 @@ import 'dotenv/config';
  */
 export const AppConstants = {
   PORT: get('PORT').default('3103').asPortNumber(),
-  // APP_VERSION: get('APP_VERSION').required().asString(),
+  APP_VERSION: get('APP_VERSION').required().asString(),
   COMPANY: 'Pelsoft',
   BD_MONGO_URI: get('BD_MONGO_URI').required().asString(),
   BD_MONGO_PWD: get('BD_MONGO_PWD').required().asString(),
