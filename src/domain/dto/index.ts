@@ -1,3 +1,3 @@
 export * from './GetStatsDto'
 export * from './ValidateMutationDto'
-export * from AdnDTO'
+export * from './AdnDTO'
