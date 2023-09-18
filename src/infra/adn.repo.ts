@@ -1,4 +1,4 @@
-import { IADNRepository } from './../app/IADNRepository';
+import { IADNRepository } from '../app/IADN.repo';
 import { ValidateMutationDto } from '../domain/dto/ValidateMutationDto';
 import DNASchema, { IDNASchema } from '../infra/schemas/adn.schema';
 

@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import { adnRouter } from './infra/adn.router';
 import morgan from 'morgan';
 import { notFoundHandler } from './common/not-found.middleware';
-import { errorHandler } from './common/http-exception';
+import { errorHandler } from './common/ExpressErrorHandler';
 import './infra/db/MondoDatabase';
 require('dotenv').config();
 
@@ -46,7 +46,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
-
+app.use('/favicon.ico', express.static(path.join(__dirname, 'favicon.ico')));
 //logger middleware--> ::1 - - [13/Jan/2022:15:23:23 +0000] "GET /api/fakes/gertUsers HTTP/1.1" 200 801 "-" "PostmanRuntime/7.28.4"
 //app.use(morgan('combined'));
 // logger middleware --> GET /api/fakes/gertUsers 200 801 - 190.525 ms

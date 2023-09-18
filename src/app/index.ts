@@ -1,2 +1,2 @@
-export * from './IADNRepository'
-export * from './adn.service'
+export * from './IADN.repo';
+export * from './adn.service';

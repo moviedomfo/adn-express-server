@@ -1,12 +1,12 @@
+import { AppError } from './../../dist/common/http-exception';
 import { IDNASchema } from './../infra/schemas/adn.schema';
 import { IStatsDto } from './../domain/dto/GetStatsDto';
 import { ValidateMutationDto } from './../domain/dto/ValidateMutationDto';
 import { AppConstants } from '../common/commonConstants';
-import { AppError } from '../common/http-exception';
 import { IADNService } from '../domain/IADNService';
-import { IADNRepository } from './IADNRepository';
+import { IADNRepository } from './IADN.repo';
 
-export  class ADNService implements IADNService {
+export class ADNService implements IADNService {
   constructor(private readonly adnRepo: IADNRepository) {}
 
   public MutationVerify = async (
@@ -29,6 +29,8 @@ export  class ADNService implements IADNService {
   public GetById = async (id: string): Promise<IDNASchema> => {
     return new Promise<IDNASchema>((resolve, reject) => {
       const res = this.adnRepo.GetById(id);
+
+     
 
       resolve(res);
     });
@@ -63,74 +65,7 @@ export  class ADNService implements IADNService {
     await this.adnRepo.ClearAll();
   };
 }
-// export default class ADNService implements IADNService {
-//   constructor(private readonly adnRepo: IADNRepository) {}
 
-//   public MutationVerify = async (
-//     req: ValidateMutationDto
-//   ): Promise<boolean> => {
-//     return new Promise<boolean>((resolve) => {
-//       validateMatrixFormat(req.dna);
-
-//       const adnMatrix = createMatriz(req.dna);
-
-//       let hasMutation = hasHoizontalMutation(adnMatrix);
-//       if (!hasMutation) hasMutation = hasVerticalMutation(adnMatrix);
-//       if (!hasMutation) hasMutation = validateDiagonal(adnMatrix);
-
-//       //persist data as simple string
-//       const dna = new DNASchema({
-//         dna: req.dna.join(),
-//         hasMutation,
-//       });
-
-//       dna.save();
-
-//       resolve(hasMutation);
-//     });
-//   };
-
-//   public GetById = async (id: string): Promise<IDNASchema> => {
-//     return new Promise<IDNASchema>((resolve, reject) => {
-//       const res = DNASchema.findById(id);
-
-//       resolve(res);
-//     });
-//   };
-
-//   public GetAll = async (): Promise<IDNASchema[]> => {
-//     return new Promise<IDNASchema[]>((resolve, reject) => {
-//       const res = DNASchema.find();
-
-//       resolve(res);
-//     });
-//   };
-
-//   public Stats = async (): Promise<IStatsDto> => {
-//     return new Promise<IStatsDto>(async (resolve, reject) => {
-//       const count_mutations = await DNASchema.collection.countDocuments({
-//         hasMutation: true,
-//       });
-//       let count_no_mutation = await DNASchema.collection.countDocuments({
-//         hasMutation: false,
-//       });
-
-//       const ratio =
-//         count_no_mutation !== 0 ? count_mutations / count_no_mutation : 0;
-
-//       const stats: IStatsDto = {
-//         count_mutations,
-//         count_no_mutation,
-//         ratio: ratio,
-//       };
-//       resolve(stats);
-//     });
-//   };
-
-//   public ClearAll = async (): Promise<void> => {
-//     await DNASchema.collection.deleteMany({});
-//   };
-// }
 
 /**
  * Validate mutation on principal diamatrix diagonal . When i=j
