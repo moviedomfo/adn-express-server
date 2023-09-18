@@ -3,8 +3,8 @@ import { ValidateMutationDto, IStatsDto } from './dto';
 
 export interface IADNService {
   MutationVerify: (req: ValidateMutationDto) => Promise<boolean>;
-  GetById: (id: string) => Promise<IDNASchema>;
-  GetAll: () => Promise<IDNASchema[]>;
+  GetById: (id: string) => Promise<AdnDto>;
+  GetAll: () => Promise<AdnDto[]>;
   Stats: () => Promise<IStatsDto>;
   ClearAll: () => Promise<void>;
 }

@@ -9,6 +9,7 @@ export default class ADNMongoRepository implements IADNRepository {
   ): Promise<void> => {
     return new Promise<void>(() => {
       const dna = new DNASchema({
+       
         dna: validateMutationDto.dna.join(),
         hasMutation,
       });

@@ -1,3 +1,4 @@
+import { AdnDto } from './../domain/dto/AdnDTO';
 import { AppError } from './../../dist/common/http-exception';
 import { IDNASchema } from './../infra/schemas/adn.schema';
 import { IStatsDto } from './../domain/dto/GetStatsDto';
@@ -26,21 +27,34 @@ export class ADNService implements IADNService {
     });
   };
 
-  public GetById = async (id: string): Promise<IDNASchema> => {
-    return new Promise<IDNASchema>((resolve, reject) => {
-      const res = this.adnRepo.GetById(id);
+  public GetById = async (id: string): Promise<AdnDto> => {
+    return new Promise<AdnDto>(async (resolve, reject) => {
+      const res = await this.adnRepo.GetById(id);
 
-     
+      const adn = {
+        id: res._id,
+        dna: res.dna,
+        hasMutation: res.hasMutation,
+        date: new Date(res.createdAt),
+      };
 
-      resolve(res);
+      resolve(adn);
     });
   };
 
-  public GetAll = async (): Promise<IDNASchema[]> => {
-    return new Promise<IDNASchema[]>((resolve, reject) => {
-      const res = this.adnRepo.GetAll();
-
-      resolve(res);
+  public GetAll = async (): Promise<AdnDto[]> => {
+    return new Promise<AdnDto[]>(async (resolve, reject) => {
+      const res = await this.adnRepo.GetAll();
+      const adnList = res.map(
+        (adnData) =>
+          <AdnDto>{
+            id: adnData._id,
+            dna: adnData.dna,
+            hasMutation: adnData.hasMutation,
+            date: new Date(adnData.createdAt),
+          }
+      );
+      resolve(adnList);
     });
   };
 
@@ -65,7 +79,6 @@ export class ADNService implements IADNService {
     await this.adnRepo.ClearAll();
   };
 }
-
 
 /**
  * Validate mutation on principal diamatrix diagonal . When i=j
