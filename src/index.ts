@@ -1,4 +1,4 @@
-import { AppConstants } from './common/commonConstants';
+import { AppConstants } from './common/CommonConstants';
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';

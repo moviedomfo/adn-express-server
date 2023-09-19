@@ -3,7 +3,7 @@ import { AppError } from './../../dist/common/http-exception';
 import { IDNASchema } from './../infra/schemas/adn.schema';
 import { IStatsDto } from './../domain/dto/GetStatsDto';
 import { ValidateMutationDto } from './../domain/dto/ValidateMutationDto';
-import { AppConstants } from '../common/commonConstants';
+import { AppConstants } from '../common/CommonConstants';
 import { IADNService } from '../domain/IADNService';
 import { IADNRepository } from './IADN.repo';
 

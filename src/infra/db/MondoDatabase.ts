@@ -1,6 +1,4 @@
-import { ADNController } from './../adn.controller';
-import { AppConstants } from '../../common/commonConstants';
-import { connect } from 'mongoose';
+import { AppConstants } from '../../common/CommonConstants';
 import { MongoDatabaseCnn } from './MondoDatabaseCnn';
 
 (async () => {
@@ -12,7 +10,7 @@ import { MongoDatabaseCnn } from './MondoDatabaseCnn';
 
 async function connectToMongo() {
   //const uri = `mongodb+srv://${AppConstants.BD_MONGODB_USER}:${AppConstants.BD_MONGODB_PWD}@cluster0.aa2koji.mongodb.net/?retryWrites=true&w=majority`;
-  
+
   MongoDatabaseCnn.connect({
     dbName: AppConstants.BD_MONGO_DB_NAME,
     uri: AppConstants.BD_MONGO_URI,
